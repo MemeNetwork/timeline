@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <title>Meme Timeline</title>
+  </head>
+  <body>
+    
+<img src="RenderedImage.png">
+    <div class="list">
+    
+      <month>2018</month>
+    </div>
+    <div id="list" class="list"></div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script>
+      
+      var months = [
+        "",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+      $.ajax({
+        url: 'https://spreadsheets.google.com/feeds/list/10ShUiWeln4z4dWNtPYB7oqf4JthONPD-y6H-2o6s8wY/od6/public/values?alt=json',
+        method: 'GET',
+        contentType: 'application/json'
+      }).done(function(data) {
+        //console.log(data);
+        var arr = data.feed.entry;
+        //<div class="media"><div class="media-image align-self-start mr-3" style="background-image: url('')"></div><div class="media-body"><h5 class="md-0 mb-0">title</h5><span class="date">Jan 2</span><span class="alive"></span></div></div>
+        for (var i = 0, len = arr.length; i < len; i++) {
+          date = arr[i]['gsx$date']['$t'].split("/");
+          $( "#list" ).append(`
+<div class="media"><div class="media-image align-self-start mr-3" style="background-image: url('`+arr[i]['gsx$icon']['$t']+`')"></div><div class="media-body"><h5 class="md-0 mb-0">`+arr[i]['gsx$meme']['$t']+`</h5><span class="date">`+months[date[0]]+` `+date[1]+`, 20`+date[2]+`</span><span class="`+arr[i]['gsx$status']['$t']+`"></span></div></div>
+`);
+
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+/*
+<meta http-equiv="refresh" content="5;url=http://lbhkr.vastserve.com/" />
+*/
+
+*{
+    scroll-behavior: smooth;
+}
+img{
+    display: block;
+    max-width: 400px;
+    margin: auto;
+    width: 100%;
+    padding: 20px;
+}
+body {
+    font-family: "Open Sans", sans-serif;
+    height: 100%;
+    background-color: #f5f9fb!important;
+}
+
+body,
+html,
+section {
+    width: 100%;
+    height: 100%;
+}
+
+
+.navbar-light.bg-light {
+    background-color: #fff!important;
+}
+
+month {
+    display: block;
+    color: #ccc;
+}
+
+.date {
+    display: block;
+    color: #ccc;
+}
+
+tr {
+    border: none;
+}
+
+
+.media {
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 10px 0px;
+    padding: 6px;
+    padding-bottom: 0px;
+    cursor: pointer;
+}
+
+
+
+.media-image {
+    border-radius: 5px;
+    margin: 5px;
+    width: 60px;
+    height: 60px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.media-body {
+    margin: 5px;
+}
+
+.dead:before {
+    background-color: #fc104a;
+    color: white;
+    padding: 1px 7px;
+    border-radius: 4px;
+    float: right;
+    display: block;
+    position: relative;
+    top: -25px;
+    content: "dead";
+}
+
+.alive:before {
+    background-color: #24dcaa;
+    color: white;
+    padding: 1px 7px;
+    border-radius: 4px;
+    float: right;
+    display: block;
+    position: relative;
+    top: -25px;
+    content: "fresh";
+}
+
+.dying:before {
+    background-color: #ffbb3e;
+    color: white;
+    padding: 1px 7px;
+    border-radius: 4px;
+    float: right;
+    display: block;
+    position: relative;
+    top: -25px;
+    content: "dying";
+}
+
+.list {
+    max-width: 500px;
+    margin: auto;
+    padding: 10px;
+}
+
+.col-sm-3 {
+    background-color: #fff;
+    padding-top: 56px!important;
+    padding-top: 56px;
+    -webkit-box-flex: 0;
+    max-width: 200px!important;
+    -ms-flex: 0 0 200px!important;
+    flex: 0 0 200px!important;
+    padding-top: 56px;
+}
+
+.col-sm-8 {
+    -webkit-box-flex: 0!important;
+    -ms-flex: 1!important;
+    flex: 1!important;
+    max-width: 100%!important;
+    overflow-y: scroll;
+    padding-top: 56px;
+    padding-left: 0!important;
+}
+
+nav > .nav-item {
+    display: block;
+    padding: 10px 30px;
+    background-color: #fff;
+    text-align: left;
+}
+
+.col-sm-8,.col-sm-3,.row{
+    max-height: 100%;
+}
+
+
+.carousel{
+    max-height: 400px;
+    overflow: hidden;
+    
+}
