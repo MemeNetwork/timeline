@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <title>Meme Timeline</title>
+</head>
+
+<body>
+
+
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="javascript:go('/')"><span class="navbar-brand mb-0 h1"><img src="icons/logo_transparant.png" height="50px"></span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="javascript:go('/')">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="javascript:go('/all')">List</a>
+                <a class="nav-item nav-link" href="javascript:go('https://twitter.com/brenisdank')">Twitter</a>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+
+        <div class="row">
+            <div class="col-sm-8 page" id="home">
+                <noscript>
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-4">Error</h1>
+                        <p class="lead">Make sure Javascript is enabled.</p>
+                    </div>
+                </div>
+                </noscript>
+            </div>
+            <div class="col-sm-8 page" id="all">
+            </div>
+            <div class="col-sm-8 page" id="error">
+            </div>
+            <div class="col-sm-8 page" id="view">
+            </div>
+            <div class="col-sm-8 page" id="more">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script>
+        var divsToHide = document.getElementsByClassName("page"); //divsToHide is an array
+
+
+        var varNames = new Array("home", "all", "view", "more", "error");
+        for (var i = 0; i < varNames.length; i++) {
+            window[varNames[i]] = false;
+        }
+        console.log(home, all, view, more, error);
+        var all_i;
+
+        var u;
+        var months = [
+            "",
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ]
+        var full_months = [
+            "",
+            "January",
+            "Febuary",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+        
+        
+        
+        
+        
+
+        
+        
+        var arr;
+        $.ajax({
+            url: 'https://spreadsheets.google.com/feeds/list/10ShUiWeln4z4dWNtPYB7oqf4JthONPD-y6H-2o6s8wY/od6/public/values?alt=json',
+            method: 'GET',
+            contentType: 'application/json'
+        }).done(function(data) {
+            arr = data.feed.entry;
+            /*//////// 
+            //<div class="media"><div class="media-image align-self-start mr-3" style="background-image: url('')"></div><div class="media-body"><h5 class="md-0 mb-0">title</h5><span class="date">Jan 2</span><span class="alive"></span></div></div>
+            for (var i = 0, len = 5; i < len; i++) {
+                date = arr[i]['gsx$date']['$t'].split("/");
+                $("#list").append(`
+<div class="media fadeInUp animated"><div class="media-image align-self-start mr-3" style="background-image: url('` + arr[i]['gsx$icon']['$t'] + `')"></div><div class="media-body"><h5 class="md-0 mb-0">` + arr[i]['gsx$meme']['$t'] + `</h5><span class="date">` + months[date[0]] + ` ` + date[1] + `, 20` + date[2] + `</span><span class="` + arr[i]['gsx$status']['$t'] + `"></span></div></div>
+`);
+
+            }
+
+            /*           for (var i = 0, len = arr.length; i < len; i++) {
+                            date = arr[i]['gsx$date']['$t'].split("/");
+                            $("#list").append(`
+            <div class="media"><div class="media-image align-self-start mr-3" style="background-image: url('` + arr[i]['gsx$icon']['$t'] + `')"></div><div class="media-body"><h5 class="md-0 mb-0">` + arr[i]['gsx$meme']['$t'] + `</h5><span class="date">` + months[date[0]] + ` ` + date[1] + `, 20` + date[2] + `</span><span class="` + arr[i]['gsx$status']['$t'] + `"></span></div></div>
+            `);
+
+                        }*/
+
+
+            init(); //initiate 
+
+        });
+        //load_index_preview(arr,)
+
+
+
+
+
+        //load_index_preview_new(["Saab", "Volvo", "BMW", "MINECRAFT", "Fornite", "why"], 2, 4);
+        function load_index_preview_new(array, start, max, id) {
+
+        }
+        /*function load_index_preview_new(array, start, max) {
+            var strt, mx, return_arr = [];;
+            if (start == 0) {
+                strt = 0; //Set array to full if 0
+            } else if (start === undefined) {
+                console.error("Error: The start variable is Undefined.")
+            } else if (isNaN(start) == true) {
+                console.error("Error: The start value, " + start + " was not a valid number.")
+            } else if (start !== 0) {
+                strt = (start - 1);
+            }
+
+            if (max == 0) {
+                mx = array.length; //Set array to full if 0
+            } else if (max === undefined) {
+                console.error("Error: The start variable is Undefined.")
+            } else if (isNaN(max) == true) {
+                console.error("Error: The max value, " + max + " was not a valid number.")
+            } else if (max !== 0) {
+                mx = (max - 1);
+            }
+
+            for (var i = strt, len = mx; i = len; i++) {
+                return_arr.push(array[i])
+            }
+
+
+            return return_arr;
+        }*/
+
+
+
+        function openInNewTab(url) {
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+
+
+        //START: DETECT URL CHANGE
+        var _wr = function(type) {
+            var orig = history[type];
+            return function() {
+                var rv = orig.apply(this, arguments);
+                var e = new Event(type);
+                e.arguments = arguments;
+                window.dispatchEvent(e);
+                return rv;
+            };
+        };
+
+        String.prototype.beginsWith = function(string) {
+            return (this.indexOf(string) === 0);
+        };
+
+
+        history.pushState = _wr('pushState'), history.replaceState = _wr('replaceState');
+
+        // Use it like this:
+        var previous_state;
+        window.addEventListener('pushState', function(e) {
+            if (previous_state !== window.location.pathname) {
+                //init();
+                u = window.location.pathname
+            }
+            previous_state = window.location.pathname;
+        });
+        window.onpopstate = function(event) {
+            init();
+            //u = window.location.pathname
+        };
+
+        //END: DETECT URL CHANGE
+
+
+
+
+
+
+
+
+        function go(url) {
+            if (isExternal(url)) {
+                openInNewTab(url);
+            } else {
+                if (u !== url) {
+                    history.pushState(null, null, url);
+                    init();
+                }
+                u = url
+            }
+            $('.navbar-collapse').collapse('hide');
+        }
+
+
+        var home_page = document.getElementById("home");
+        var all_page = document.getElementById("all");
+        var error_page = document.getElementById("error");
+        var view_page = document.getElementById("view");
+        var more_page = document.getElementById("more");
+
+
+
+        function init() {
+
+
+
+            //$("#home").html("");
+            console.log(window.location.pathname);
+            var url = window.location.pathname;
+            u = url;
+
+            if (url == '/') { // INDEX
+                goto_page("home");
+                console.log(home);
+                if (home !== true) {
+                    home = true;
+
+                    $("#home").html("");
+                    $("#home").append(make_jumbotron("MEME TIMELINE", "Keep up with all the meme's 2018 has offered us."))
+                    $("#home").append(`
+                <div class="list" id="list">
+                    
+                </div>
+<div class="list">
+                    <div class="load_more fadeInUp animated" onclick="go('/all/18')">View More</div>
+                   </div>`);
+
+
+
+                    load_index_preview_new(arr, 1, 5, "list");
+
+
+                }
+                /*`<div class="loader">
+                        <div class="animation">
+                            <div class="anim4"></div>
+                        </div>
+                    </div>`*/
+                //arr.slice(0, 6).forEach(load_index_preview);
+                console.log(arr);
+            } else if (url.startsWith("/all")) {
+
+
+                goto_page("all");
+                if (all !== true) {
+                    $("#all").html("");
+
+                    $("#all").append(make_jumbotron("View All", "Entire list of memes"));
+                    $("#all").append(`<div id="all_list" class="list"></div>`);
+                    load_index_preview_new(arr, 1, 10, "all_list");
+                    all = true;
+                }
+                jQuery(function($) {
+                    $('#all').on('scroll', function() {
+                        if ($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
+                            load_index_preview_new(arr, all_i + 1, all_i + 10, "all_list");
+                            console.log(all_i);
+                        }
+                    })
+                });
+
+            } else if (url.startsWith("/view")) {
+                var view_id = url.replace("/view/", "");
+                //console.log(view_id);
+                function isCherries(fruit) {
+                    return fruit.gsx$id.$t === view_id;
+                }
+                var view_arr = arr.find(isCherries);
+                console.log(view_arr);
+                goto_page("view");
+                $("#view").html("");
+                $("#view").append(make_jumbotron("Meme Info", ""))
+
+                $("#view").append(``);
+                (function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://memetimeline.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+
+
+                console.log(view_arr["gsx$type"]["$t"])
+                if (view_arr["gsx$type"]["$t"] === "text") {
+                    $("#view").append(`
+                <div class="list profile">
+                    <img src="` + view_arr["gsx$icon"]["$t"] + `">
+                    <h3>` + view_arr["gsx$meme"]["$t"] + `</h3>
+                    <h6><span class="date">` + view_arr["gsx$date"]["$t"] + `</span></h6>
+                    <h6><span class="` + view_arr["gsx$status"]["$t"] + `"></span></h6><h4>About:</h4><p>` + view_arr["gsx$desc"]["$t"] + `</p><div class="read_more" onclick="openInNewTab('` + view_arr["gsx$link"]["$t"] + `');">Read More</div><div id="disqus_thread"></div>
+</div>`);
+                    console.log(s);
+                    $( ".profile" ).append(s);
+                    
+                } else {
+                    $("#view").append(`
+                <div class="list profile">
+                    <img src="` + view_arr["gsx$icon"]["$t"] + `">
+                    <h3>` + view_arr["gsx$meme"]["$t"] + `</h3>
+                    <h6><span class="date">` + view_arr["gsx$date"]["$t"] + `</span></h6>
+                    <h6><span class="` + view_arr["gsx$status"]["$t"] + `"></span></h6>` + view_arr["gsx$desc"]["$t"]+`<div id="disqus_thread"></div>
+</div>`);
+                    $( ".profile" ).append(s);
+
+                }
+})();
+            } else { // ERROR 404 
+                goto_page("error");
+                $("#error").html("");
+                $("#error").append(make_jumbotron("404 Not Found", "We're sorry but the page your looking for could not be found. URL: " + window.location));
+
+
+            }
+        }
+
+        function goto_page(id) {
+            $('.page').not('#' + id).hide();
+            $('#' + id).show();
+        }
+
+        function load_index_preview(arr, i) {
+            if (i < 5) {
+
+                $(".loader").show();
+
+            } else {
+                $(".loader").hide();
+                setTimeout(function() {
+                    $(".load_more").show()
+                }, 100 * (i + 1));
+            }
+        }
+
+
+        function make_jumbotron(title, desc) {
+            return `<div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-4">` + title + `</h1>
+                        <p class="lead">` + desc + `</p>
+                    </div>
+                </div>`
+        }
+        //load_index_preview_new(arr, 1,10,"hello");
+        function load_index_preview_new(array, start, max, id) {
+            var si = start - 1;
+            if (max > 0) {
+                var mx = max;
+            } else {
+                var mx = array.length;
+            }
+
+
+            for (var i = si, len = mx; i < len; i++) {
+                if (i == si) {
+                    $("#" + id).append(`<div class="loader"><div class="animation"><div class="anim4"></div></div></div>`);
+                } else if (i == mx - 1) {
+                    $(".loader").remove();
+                }
+                all_i = i + 1;
+                if (arr[i] === undefined) {} else {
+                    //console.log(i, arr);
+                    (function(i) {
+                        setTimeout(function() {
+                            //` + arr[i]['gsx$link']['$t'] + `
+                            date = arr[i]['gsx$date']['$t'].split("/");
+                            $("#" + id).append(`<div class="media fadeInUp animated" onclick="go('/view/` + arr[i]['gsx$id']['$t'] + `');"><div class="media-image align-self-start mr-3" style="background-image: url('` + arr[i]['gsx$icon']['$t'] + `')"></div><div class="media-body"><h5 class="md-0 mb-0">` + arr[i]['gsx$meme']['$t'] + `</h5><span class="date">` + months[date[0]] + ` ` + date[1] + `, 20` + date[2] + `</span><span class="` + arr[i]['gsx$status']['$t'] + `"></span></div></div>`);
+                            console.log("index", i, arr[i]);
+
+                        }, 100 * i);
+                    }(i));
+                }
+                /*setTimeout( function(){
+                date = arr[i]['gsx$date']['$t'].split("/");
+                $("#"+id).append(`<div class="media fadeInUp animated" onclick="openInNewTab('` + arr[i]['gsx$link']['$t'] + `');"><div class="media-image align-self-start mr-3" style="background-image: url('` + arr[i]['gsx$icon']['$t'] + `')"></div><div class="media-body"><h5 class="md-0 mb-0">` + arr[i]['gsx$meme']['$t'] + `</h5><span class="date">` + months[date[0]] + ` ` + date[1] + `, 20` + date[2] + `</span><span class="` + arr[i]['gsx$status']['$t'] + `"></span></div></div>`);
+                    console.log("index",i, arr[i]);
+                }, 100 * i);*/
+            }
+
+            //date = arr['gsx$date']['$t'].split("/");
+
+            //`<div class="media fadeInUp animated" onclick="openInNewTab('` + arr['gsx$link']['$t'] + `');"><div class="media-image align-self-start mr-3" style="background-image: url('` + arr['gsx$icon']['$t'] + `')"></div><div class="media-body"><h5 class="md-0 mb-0">` + arr['gsx$meme']['$t'] + `</h5><span class="date">` + months[date[0]] + ` ` + date[1] + `, 20` + date[2] + `</span><span class="` + arr['gsx$status']['$t'] + `"></span></div></div>`
+        }
+
+
+
+
+        console.log();
+        // { name: 'cherries', quantity: 5 }
+
+        function isExternal(url) {
+            var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/);
+            if (typeof match[1] === "string" && match[1].length > 0 && match[1].toLowerCase() !== location.protocol) return true;
+            if (typeof match[2] === "string" && match[2].length > 0 && match[2].replace(new RegExp(":(" + {
+                    "http:": 80,
+                    "https:": 443
+                }[location.protocol] + ")?$"), "") !== location.host) return true;
+            return false;
+        }
+    </script>
+</body>
+
+</html>
